@@ -1,0 +1,342 @@
+/* Setting the font */
+@font-face {
+  font-family: "Roboto Mono";
+  src: url("../../assets/fonts/RobotoMono-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Set default styling */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+  color: #000;
+  font-family: "Roboto Mono", monospace;
+}
+
+/* Navigation menu (Portfolio, CV, Bio, Contact) */
+nav .menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+/* Defining a navigation list of links */
+nav .menu li {
+  margin-left: 7rem;
+}
+
+nav .menu li a {
+  text-decoration: none;
+  color: #000;
+  font-size: 1rem;
+  font-weight: normal;
+}
+
+nav .menu li a:hover {
+  text-decoration: underline;
+}
+
+nav {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+
+/* Responsive navigation menu */
+@media screen and (max-width: 600px) {
+  nav .menu {
+    flex-direction: column;
+    align-items: flex-end;
+    position: fixed; /* Use fixed to ensure it stays in view */
+    font-size: 0.7rem;
+    top: 0.4rem;
+    right: 0.4rem;
+    margin: 0;
+    padding: 0;
+    gap: 1rem;
+    background: transparent;
+  }
+
+  nav .menu li {
+    margin: 0;
+  }
+
+  nav .menu li a {
+    text-align: right;
+    font-size: 1rem;
+  }
+}
+
+/* ASCII art styling */
+#ascii-art {
+  white-space: pre;
+  font-family: "Roboto Mono", monospace;
+  padding: 1rem;
+  padding-left: 4rem;
+  margin-top: 0rem;
+  color: #0015ff;
+  font-size: 8.5px;
+}
+
+/* Responsive ASCII art */
+@media screen and (max-width: 600px) {
+  #ascii-art {
+    padding-left: 2rem;     /* Reduce left padding */
+    margin-top: 0;          /* Remove negative margin */
+    font-size: 0.2rem;      /* Slightly bigger font for readability */
+  }
+}
+
+/* Styling for text box displaying nav information (portfolio, CV, bio, contact) */
+#text-box-nav {
+  white-space: pre-wrap;
+  font-family: 'Roboto Mono', monospace;
+  padding: 20px;
+  font-size: 0.9rem;
+  width: 100vw;
+  max-width: vw;
+  box-sizing: border-box;
+}
+
+/* Responsive styling for nav text box */
+@media screen and (max-width: 600px) {
+  #text-box-nav {
+    width: 100vw;
+    padding: 0.6rem;
+    font-size: 2.5vw;
+  }
+}
+
+#text-box-nav a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#text-box-nav a:hover {
+  text-decoration: underline;
+}
+
+/* Image grid for works */
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(2, max-content);
+    padding-left: 20px;
+    gap: 10px; /* remove gap */
+    justify-content: start; /* align grid to left */
+}
+
+.image-grid img {
+    display: block; /* remove inline gap */
+}
+
+/* Images for Brave */
+.img-proto {
+    width: 550px;
+}
+
+.img-brave {
+    width: 457px;
+}
+
+.img-winter {
+    width: 550px;
+}
+
+.img-neutral {
+    width: 320px;
+}
+
+.img-icon-jam{
+  width: 550px;
+  height: 600px;
+}
+
+.img-icon-shot{
+  width: 1000px;
+}
+
+.img-logo {
+  display: block;
+  margin: 100px auto 0 auto; 
+  width: 200px;
+  height: auto;
+  border-radius: 4px; 
+}
+
+.works-text-container {
+  display: flex;
+  gap: 30px; /* space between boxes */
+  padding-left: 20px;
+  padding-top: 20px;
+}
+
+.left-text-box {
+  width: 530px;
+}
+
+.right-text-box {
+  width: 1000px;
+}
+
+.references-text-box{
+  width: 1560px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+}
+
+/* Class to style links for works */
+
+.link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+/* Styling for proust animated text */
+#proust-animated {  
+  width: 1560px;
+  font-family: "Roboto Mono", monospace;
+  font-size: 0.9rem;
+  padding-left: 20px;
+  padding-top: 40px;
+  padding-bottom: 20px;
+  color: 	#ffd400;
+}
+
+/* Responsive layout for phones */
+@media (max-width: 600px) {
+    .image-grid {
+        display: grid;
+        grid-template-columns: 50vw 50vw; /* perfectly split columns */
+        grid-template-areas:
+            "img2 img2"
+            "img1 img3";
+        padding-left: 20px;
+        padding-right: 20px;
+        row-gap: 2vw;
+        column-gap: 2vw;
+    }
+
+    .img1 {
+        grid-area: img1;
+        width: 50vw;
+        align-self: center;   
+    }
+
+    .img2 {
+        grid-area: img2;
+        width: 92vw;
+        align-self: center;
+    }
+
+    .img3 {
+        grid-area: img3;
+        height: 28vw;
+        width: 40vw;
+        align-self: center;
+    }
+
+    .img4 {
+        display: none !important;
+    }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 30px;
+  padding-left: 6px;
+}
+
+.top-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap; /* allows responsive wrapping */
+}
+
+.left-column {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  width: 540px;
+}
+
+.right-column {
+  width: 1000px;
+}
+
+.text-block {
+  white-space: pre-wrap;
+  font-family: 'Roboto Mono', monospace;
+  padding: 20px;
+  font-size: 0.9rem;
+  color: #000;
+}
+
+.text-block-2 {
+  width: 1000px;
+}
+
+.text-block-3 {
+  width: 460px;
+  padding: 20px 0 0 0;
+  margin-top: 20px;
+}
+
+.logo {
+  margin-top: 20px;
+  max-width: 100%;
+  width: 200px;
+}
+
+#text-block-3 {
+  width: auto !important;
+  padding-left: 6px;
+}
+
+@media (max-width: 600px) {
+  .container {
+    flex-direction: column;
+    padding-left: 5px; /* left padding */
+  }
+
+  .top-row {
+    flex-direction: column;
+    gap: 10px; /* smaller gap between stacked items */
+  }
+
+  .left-column,
+  .right-column,
+  .text-block-2,
+  .text-block-3 {
+    width: 100vw;
+  }
+
+  .text-block,
+  .text-block-2,
+  .text-block-3 {
+    font-size: 0.4rem; /* smaller font size */
+  }
+
+  .logo {
+    width: 150px; /* scale logo down for phones */
+    margin-top: 15px;
+  }
+}
+
+h1 a {
+  text-decoration: none;
+  color: inherit;
+}
+h1 a:hover {
+  text-decoration: underline;
+}
