@@ -1,7 +1,7 @@
 const asciiArt = `
                                ..=:.-=-:. ....:......                                      
                           .-+*****##**#**************+:..                                  
-                     :=++*####***#%##**+###*#####*###*****+-                              
+  daniel manz :)      :=++*####***#%##**+###*#####*###*****+-                              
                    :+**#*###*****#########**##*##########*#****.                          
               ++****####*####*###########*####%##%######%%####*+                          
               :*###**###*####**#%###%######*######%############*:.                        
@@ -59,7 +59,7 @@ const asciiArt = `
 `;
 
 const contentMap = {
-    Portfolio: `Brave, 2024
+    Portfolio: `Brave, 2024 
 Embedded AI-driven sound synthesiser, enabling network-bending
 ---------------------------------------------------------------
 Ancestral (r)Evocations, 2024
@@ -69,8 +69,13 @@ Iconostasis, 2023
 Audio-reactive roses, using JavaScript + PureData 
 ---------------------------------------------------------------`,
     CV: `This is the CV content.\nMore lines here...`,
-    Bio: `Research-practitioner specialising in ML-based audio synthesis, instrument fabrication and human-AI interaction. 
-Seeking to empower artists in a time of rapidly developing AI technology, leveraging unorthodox applications of generative models and user-centred design methodologies.`,
+    Bio: `.𖥔 ݁ ˖ London, UK
+
+Developer specialising in ML-based audio synthesis, instrument fabrication and human-AI interaction.
+Seeking to empower artists in a rapidly developing gen-AI landscape, designing systems that can meaningfully support expression & agency.
+
+GitHub <<<<<<<<<<
+LinkedIn <<<<<<<<`,
     Contact: `please feel free to contact me ⊹╰(⌣ʟ⌣)╯⊹
 email: danmanzdesign@gmail.com
 number: +44 7581 466 806
@@ -84,53 +89,86 @@ const portfolioLinks = {
   'Iconostasis, 2023': 'iconostasis.html'
 };
 
+const bioLinks = {
+  'GitHub': 'https://github.com/danielmanz17',
+  'LinkedIn': 'https://www.linkedin.com/in/daniel-manz-a0464b1b2/'
+};
+
+
 document.addEventListener("DOMContentLoaded", () => {
   const asciiTarget = document.getElementById("ascii-art");
 
-  asciiTarget.textContent = asciiArt;
+  let asciiIndex = 0;
+  let asciiDisplay = asciiArt.split('').map(ch => (ch === '\n' ? '\n' : ' '));
 
-
-  const textBox = document.getElementById("text-box");
-
-  function renderTextBox(text, isPortfolio = false) {
-    let i = 0;
-    textBox.innerHTML = '';
-    const chars = text.split('');
-    const display = [];
-
-    function renderStep() {
-      if (i < chars.length) {
-        display.push(chars[i]);
-        textBox.textContent = display.join('');
-        i++;
-        setTimeout(renderStep, 0);
-      } else if (isPortfolio) {
-        Object.entries(portfolioLinks).forEach(([title, href]) => {
-          textBox.innerHTML = textBox.innerHTML.replace(
-            title,
-            `<a href="${href}">${title}</a>`
-          );
-        });
-      }
+  const nonSpaceIndices = [];
+  for (let i = 0; i < asciiArt.length; i++) {
+    if (asciiArt[i] !== ' ' && asciiArt[i] !== '\n') {
+      nonSpaceIndices.push(i);
     }
+  }
+asciiTarget.textContent = asciiArt;
 
-    renderStep();
+  const textBox = document.getElementById("text-box-nav");
+
+function renderTextBox(text, linksMap = null, instant = false) {
+  function escapeRegExp(string) {
+    return string.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&');
   }
 
-// Add this line to auto-load "Portfolio" on page load
-  renderTextBox(contentMap["Portfolio"], true);
+  if (instant) {
+    // Instant render with line breaks and links
+    let html = text.replace(/\n/g, '<br>');
+    if (linksMap) {
+      Object.entries(linksMap).forEach(([txt, href]) => {
+        const regex = new RegExp(escapeRegExp(txt), 'g');
+        const isExternal = href.startsWith('http');
+        const anchor = `<a href="${href}"${isExternal ? ' target="_blank"' : ''}>${txt}</a>`;
+        html = html.replace(regex, anchor);
+      });
+    }
+    textBox.innerHTML = html;
+    return;
+  }
 
-  document.querySelectorAll('nav .menu li a').forEach(link => {
-    link.addEventListener('click', e => {
-      e.preventDefault();
-      const key = e.target.textContent.trim();
-      if (key === 'CV') {
-        window.open('./assets/docs/cv.pdf', '_blank');
-      } else if (key === 'Portfolio') {
-        renderTextBox(contentMap[key], true);
-      } else if (contentMap[key]) {
-        renderTextBox(contentMap[key]);
-      }
-    });
+  // Incremental typing effect
+  let i = 0;
+  const chars = text.split('');
+  const display = [];
+
+  function renderStep() {
+    if (i < chars.length) {
+      display.push(chars[i]);
+      textBox.innerHTML = display.join('').replace(/\n/g, '<br>');
+      i++;
+      setTimeout(renderStep, 0);
+    } else if (linksMap) {
+      Object.entries(linksMap).forEach(([txt, href]) => {
+        const regex = new RegExp(escapeRegExp(txt), 'g');
+        const isExternal = href.startsWith('http');
+        const anchor = `<a href="${href}"${isExternal ? ' target="_blank"' : ''}>${txt}</a>`;
+        textBox.innerHTML = textBox.innerHTML.replace(regex, anchor);
+      });
+    }
+  }
+
+  renderStep();
+}
+
+const linksMap = portfolioLinks;
+renderTextBox(contentMap['Portfolio'], linksMap, true);
+
+document.querySelectorAll('nav .menu li a').forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    const key = e.target.textContent.trim();
+    if (key === 'CV') {
+      window.open('./assets/docs/cv.pdf', '_blank');
+    } else if (contentMap[key]) {
+      const linksMap = key === 'Portfolio' ? portfolioLinks :
+                       key === 'Bio' ? bioLinks : null;
+      renderTextBox(contentMap[key], linksMap);
+    }
   });
+});
 });

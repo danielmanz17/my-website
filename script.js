@@ -69,8 +69,13 @@ Iconostasis, 2023
 Audio-reactive roses, using JavaScript + PureData 
 ---------------------------------------------------------------`,
     CV: `This is the CV content.\nMore lines here...`,
-    Bio: `Research-practitioner specialising in ML-based audio synthesis, instrument fabrication and human-AI interaction. 
-Seeking to empower artists in a time of rapidly developing AI technology, leveraging unorthodox applications of generative models and user-centred design methodologies.`,
+    Bio: `.𖥔 ݁ ˖ London, UK
+
+Developer specialising in ML-based audio synthesis, instrument fabrication and human-AI interaction.
+Seeking to empower artists in a rapidly developing gen-AI landscape, designing systems that can meaningfully support expression & agency.
+
+GitHub <<<<<<<<<<
+LinkedIn <<<<<<<<`,
     Contact: `please feel free to contact me ⊹╰(⌣ʟ⌣)╯⊹
 email: danmanzdesign@gmail.com
 number: +44 7581 466 806
@@ -83,6 +88,12 @@ const portfolioLinks = {
   'Ancestral (r)Evocations, 2024': 'ancestral.html',
   'Iconostasis, 2023': 'iconostasis.html'
 };
+
+const bioLinks = {
+  'GitHub': 'https://github.com/danielmanz17',
+  'LinkedIn': 'https://www.linkedin.com/in/daniel-manz-a0464b1b2/'
+};
+
 
 document.addEventListener("DOMContentLoaded", () => {
   const asciiTarget = document.getElementById("ascii-art");
@@ -123,30 +134,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const textBox = document.getElementById("text-box-nav");
 
-  function renderTextBox(text, isPortfolio = false) {
-    let i = 0;
-    textBox.innerHTML = '';
-    const chars = text.split('');
-    const display = [];
+function renderTextBox(text, linksMap = null) {
+  let i = 0;
+  textBox.innerHTML = '';
+  const chars = text.split('');
+  const display = [];
 
-    function renderStep() {
-      if (i < chars.length) {
-        display.push(chars[i]);
-        textBox.textContent = display.join('');
-        i++;
-        setTimeout(renderStep, 0);
-      } else if (isPortfolio) {
-        Object.entries(portfolioLinks).forEach(([title, href]) => {
-          textBox.innerHTML = textBox.innerHTML.replace(
-            title,
-            `<a href="${href}">${title}</a>`
-          );
-        });
-      }
-    }
-
-    renderStep();
+  function escapeRegExp(string) {
+    return string.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&');
   }
+
+  function renderStep() {
+    if (i < chars.length) {
+      display.push(chars[i]);
+      textBox.innerHTML = display.join('').replace(/\n/g, '<br>');
+      i++;
+      setTimeout(renderStep, 0);
+    } else if (linksMap) {
+      Object.entries(linksMap).forEach(([text, href]) => {
+        const regex = new RegExp(escapeRegExp(text), 'g');
+        const isExternal = href.startsWith('http');
+        const anchor = `<a href="${href}"${isExternal ? ' target="_blank"' : ''}>${text}</a>`;
+        textBox.innerHTML = textBox.innerHTML.replace(regex, anchor);
+      });
+    }
+  }
+
+  renderStep();
+}
+ 
 
 renderAsciiStep();
 
@@ -156,10 +172,10 @@ document.querySelectorAll('nav .menu li a').forEach(link => {
     const key = e.target.textContent.trim();
     if (key === 'CV') {
       window.open('./assets/docs/cv.pdf', '_blank');
-    } else if (key === 'Portfolio') {
-      renderTextBox(contentMap[key], true);
     } else if (contentMap[key]) {
-      renderTextBox(contentMap[key]);
+      const linksMap = key === 'Portfolio' ? portfolioLinks :
+                       key === 'Bio' ? bioLinks : null;
+      renderTextBox(contentMap[key], linksMap);
     }
   });
 });
