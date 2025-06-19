@@ -1,4 +1,4 @@
-// Another page where ASCII/portfolio text already rendered
+// Another page where ASCII/works already rendered
 
 const asciiArt = `
                                ..=:.-=-:. ....:......                                      
@@ -63,7 +63,7 @@ const asciiArt = `
 // Text to be rendered for nav menu options
 
 const contentMap = {
-    Portfolio: `Brave, 2024
+    Works: `Brave, 2024
 Embedded AI-driven sound synthesiser, enabling network-bending
 ---------------------------------------------------------------
 Ancestral (r)Evocations, 2024
@@ -87,9 +87,9 @@ instagram: @manzzzzzzzzzzd
 `
 };
 
-// Links to portfolio items
+// Links to works
 
-const portfolioLinks = {
+const worksLinks = {
   'Brave, 2024\nEmbedded AI-driven sound synthesiser, enabling network-bending': 'brave.html',
   'Ancestral (r)Evocations, 2024\nArchival sonification instrument, live ML feedback soundscape': 'ancestral.html',
   'Iconostasis, 2023\nAudio-reactive roses, using JavaScript + PureData': 'iconostasis.html'
@@ -167,8 +167,8 @@ function renderTextBox(text, linksMap = null, instant = false) {
 
 // Making nav links clickable
 
-const linksMap = portfolioLinks;
-renderTextBox(contentMap['Portfolio'], linksMap, true);
+const linksMap = worksLinks;
+renderTextBox(contentMap['Works'], linksMap, true);
 
 document.querySelectorAll('nav .menu li a').forEach(link => {
   link.addEventListener('click', e => {
@@ -177,7 +177,7 @@ document.querySelectorAll('nav .menu li a').forEach(link => {
     if (key === 'CV') {
       window.open('./assets/docs/cv.pdf', '_blank');
     } else if (contentMap[key]) {
-      const linksMap = key === 'Portfolio' ? portfolioLinks :
+      const linksMap = key === 'Works' ? worksLinks :
                        key === 'Bio' ? bioLinks : null;
       renderTextBox(contentMap[key], linksMap);
     }
